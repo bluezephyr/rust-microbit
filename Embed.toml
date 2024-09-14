@@ -2,10 +2,13 @@
 protocol = "Swd"
 
 [default.general]
-chip = "nrf52833_xxAA" # uncomment this line for micro:bit V2
+chip = "nrf52833_xxAA"
 
 [default.rtt]
-enabled = true
+enabled = false
 
 [default.gdb]
-enabled = false
+enabled = true
+
+[default.reset]
+halt_afterwards = true

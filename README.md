@@ -2,27 +2,42 @@
 
 This repo contains some experiments to run Rust on the [BBC
 Micro:bit](https://microbit.org/). Much of the setup is based on the guide
-"Embedded Rust setup explained" (https://www.youtube.com/watch?v=TOAynddiu5M).
+[Embedded Rust setup explained](https://www.youtube.com/watch?v=TOAynddiu5M).
 For other resources see below.
-
-![micro:bit](/micro_bit.jpg "micro:bit")
-
-
-## Documentation
-
-* https://docs.rust-embedded.org/book/
-* https://docs.rust-embedded.org/discovery/microbit/
 
 ## Hardware
 
-https://tech.microbit.org/hardware/
+[Hardware](https://tech.microbit.org/hardware/)
+
+![micro:bit](./micro_bit.jpg "micro:bit")
+
+## Usage
+
+### Cargo Commands
+
+* `cargo size -- -Ax` - Print size information
+* `cargo embed --chip <chip-name>` - Download the binary to the target. Use the
+  `probe-rs chip list` command to find all supported chips.
+
+Configuration for the cargo embed command is stored in the `Embed.toml` file.
+See [cargo-binutils](https://github.com/rust-embedded/cargo-binutils) for
+details.
+
+
+### Probe rs Commands
+
+* `probe-rs list` - List all connected debug probes
+* `probe-rs chip list` - List all connected debug probes
+* `probe-rs run --chip-erase` - Erase the chip
+* `probe-rs info` - Gets info about the selected debug probe and connected target
+
 
 ## Host Toolchain
 
 ### Targets
 
 Use `rustup target add <target-name>` to add support for targets in the build
-tool chain. Check the `https://doc.rust-lang.org/nightly/rustc/platform-support.html` page for
+tool chain. Check the [platform-support](https://doc.rust-lang.org/nightly/rustc/platform-support.html) page for
 details.
 
 * Microbit: thumbv7em-none-eabihf
@@ -48,13 +63,8 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/relea
 
 To list attached probes, use the command `probe-rs list`
 
-See documentation at `https://probe.rs/docs/tools/cargo-embed/` and `https://probe.rs/`
-
-### Commands
-
-```
-cargo size -- -Ax
-```
+See documentation at [cargo-embed](https://probe.rs/docs/tools/cargo-embed/)
+and [probe-rs](https://probe.rs/).
 
 ### RTT
 
@@ -71,4 +81,57 @@ optional feature `critical-section-single-core`. Add this using:
 
 See `https://docs.rs/cortex-m/0.7.7/cortex_m/#critical-section-single-core` for
 details.
+
+Enable RTT by adding the following to the `Embed.toml` file:
+
+```
+[default.rtt]
+enabled = true
+```
+
+### GDB
+
+In order to connect to an ARM device using GDB, the `arm-none-eabi-gdb` version
+of GDB is needed. For Arch Linux, this is installed using `sudo pacman -S
+arm-none-eabi-gdb qemu-system-arm openocd`. It is also possible to use the
+gdb-multiarch GDB command if it is available for the host platform. See the
+[Rust Embedded
+book](https://docs.rust-embedded.org/book/intro/install/linux.html#packages)
+for details.
+
+Enable GDB support by adding the below to the `Embed.toml` file. Note that GDB
+and RTT cannot be enabled at the same time.
+
+```
+[default.gdb]
+enabled = true
+
+[default.reset]
+halt_afterwards = true
+```
+
+Download the binary to the target with the debug probe using `cargo embed` and
+then start gdb (using `arm-none-eabi-gdb` or `gdb-multiarch`) in another
+terminal, providing the binary. Dump the errors to /dev/null.
+
+```
+arm-none-eabi-gdb ./target/thumbv7em-none-eabihf/debug/rust-microbit 2>/dev/null
+```
+
+Then connect to the target in gdb and try out some commands.
+
+```
+target remote:1337
+info registers
+disassemble
+set print asm-demangle on
+monitor reset
+```
+
+## Documentation
+
+### Books
+
+* [Rust embedded](https://docs.rust-embedded.org/book/)
+* [Microbit](https://docs.rust-embedded.org/discovery/microbit/)
 
