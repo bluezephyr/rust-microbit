@@ -7,7 +7,9 @@ For other resources see below.
 
 ## Hardware
 
-[Hardware](https://tech.microbit.org/hardware/)
+* [Hardware](https://tech.microbit.org/hardware/)
+* [Schematics](https://github.com/microbit-foundation/microbit-v2-hardware/blob/main/V2.21/MicroBit_V2.2.1_nRF52820%20schematic.PDF)
+* [Datasheet](https://infocenter.nordicsemi.com/pdf/nRF52833_PS_v1.6.pdf)
 
 ![micro:bit](./micro_bit.jpg "micro:bit")
 
@@ -126,6 +128,17 @@ info registers
 disassemble
 set print asm-demangle on
 monitor reset
+```
+
+## PAC
+
+The PAC for the Microbit can be found on the [Crates](https://crates.io/)
+page. Search for nrf52833 and select the
+[Pac](https://crates.io/crates/nrf52833-pac). Use cargo add to use the crate in
+the build.
+
+```
+cargo add nrf52833-pac
 ```
 
 ## Documentation
