@@ -5,12 +5,6 @@ Micro:bit](https://microbit.org/). Much of the setup is based on the guide
 [Embedded Rust setup explained](https://www.youtube.com/watch?v=TOAynddiu5M).
 For other resources see below.
 
-## Hardware
-
-* [Hardware](https://tech.microbit.org/hardware/)
-* [Schematics](https://github.com/microbit-foundation/microbit-v2-hardware/blob/main/V2.21/MicroBit_V2.2.1_nRF52820%20schematic.PDF)
-* [Datasheet](https://infocenter.nordicsemi.com/pdf/nRF52833_PS_v1.6.pdf)
-
 ![micro:bit](./micro_bit.jpg "micro:bit")
 
 ## Usage
@@ -32,7 +26,6 @@ details.
 * `probe-rs chip list` - List all connected debug probes
 * `probe-rs run --chip-erase` - Erase the chip
 * `probe-rs info` - Gets info about the selected debug probe and connected target
-
 
 ## Host Toolchain
 
@@ -143,8 +136,14 @@ cargo add nrf52833-pac
 
 ## Documentation
 
+### Hardware
+
+* [Hardware](https://tech.microbit.org/hardware/)
+* [Schematics](https://github.com/microbit-foundation/microbit-v2-hardware/blob/main/V2.21/MicroBit_V2.2.1_nRF52820%20schematic.PDF)
+* [Datasheet](https://docs.nordicsemi.com/bundle/ps_nrf52833/page/keyfeatures_html5.html)
+
 ### Books
 
 * [Rust embedded](https://docs.rust-embedded.org/book/)
 * [Microbit](https://docs.rust-embedded.org/discovery/microbit/)
-
+* [Rust Embedded book](https://docs.rust-embedded.org/book/intro/install/linux.html#packages)
