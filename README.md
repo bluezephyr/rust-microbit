@@ -12,6 +12,7 @@ For other resources see below.
 ### Cargo Commands
 
 * `cargo size -- -Ax` - Print size information
+* `cargo objdump  -- --disassemble` - Disassemble the binary
 * `cargo embed --chip <chip-name>` - Download the binary to the target. Use the
   `probe-rs chip list` command to find all supported chips.
 
