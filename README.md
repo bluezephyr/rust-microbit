@@ -135,6 +135,39 @@ the build.
 cargo add nrf52833-pac
 ```
 
+### Blinky, blinky using the PAC
+
+To be able to use the pac, we need to import it. The command for that is as
+follows:
+
+`use nrf52833_pac::{p0::pin_cnf::W, Peripherals};`
+
+We include the Peripherals and the pin configuration type `W`. This actually
+seems to be optional in this case since the Rust compiler can deduce the type,
+but we include it for clarity.
+
+We create a variable called p that takes ownership of the Peripherals using the
+following command:
+
+`let p: Peripherals = Peripherals::take().unwrap();`
+
+We can now configure the pins as we want. The write function takes a closure as
+input. See [pin_cnf
+write](https://docs.rs/nrf52833-pac/0.12.2/nrf52833_pac/p0/pin_cnf/struct.PIN_CNF_SPEC.html#impl-Writable-for-PIN_CNF_SPEC).
+We set pins 21 and 28 as output pins:
+
+```
+p.P0.pin_cnf[21].write(|w: &mut W| w.dir().output());
+p.P0.pin_cnf[28].write(|w: &mut W| w.dir().output());
+```
+
+Now it is possible to use the `write` function on `P0.out` to write to the
+pins. We toggle the output of pin 21:
+
+`p.P0.out.write(|w| w.pin21().bit(is_on));`
+
+Build and flash using `cargo embed`.
+
 ## Documentation
 
 ### Hardware
