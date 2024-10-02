@@ -3,21 +3,26 @@
 
 use cortex_m::asm::nop;
 use cortex_m_rt::entry;
-use nrf52833_pac::{p0::pin_cnf::W, Peripherals};
 use panic_halt as _;
+use rtt_target::{rprintln, rtt_init_print};
 
 #[entry]
 fn main() -> ! {
-    let p: Peripherals = Peripherals::take().unwrap();
-    p.P0.pin_cnf[21].write(|w: &mut W| w.dir().output());
-    p.P0.pin_cnf[28].write(|w: &mut W| w.dir().output());
-
+    rtt_init_print!();
     let mut is_on: bool = false;
     loop {
-        p.P0.out.write(|w| w.pin21().bit(is_on));
         for _ in 0..200_000 {
             nop();
         }
         is_on = !is_on;
+
+        match is_on {
+            true => {
+                rprintln!("Led is on!");
+            }
+            false => {
+                rprintln!("Led is off!");
+            }
+        }
     }
 }
