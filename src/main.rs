@@ -3,18 +3,23 @@
 
 use cortex_m::asm::nop;
 use cortex_m_rt::entry;
-use nrf52833_pac::{p0::pin_cnf::W, Peripherals};
+use embedded_hal::digital::{OutputPin, PinState};
+use hal::{gpio::Level, pac};
+use nrf52833_hal as hal;
 use panic_halt as _;
 
 #[entry]
 fn main() -> ! {
-    let p: Peripherals = Peripherals::take().unwrap();
-    p.P0.pin_cnf[21].write(|w: &mut W| w.dir().output());
-    p.P0.pin_cnf[28].write(|w: &mut W| w.dir().output());
+    let p = pac::Peripherals::take().unwrap();
+    let port0 = hal::gpio::p0::Parts::new(p.P0);
+    let _col1 = port0.p0_28.into_push_pull_output(Level::Low);
+    let mut row1 = port0.p0_21.into_push_pull_output(Level::Low);
+    let mut row2 = port0.p0_22.into_push_pull_output(Level::Low);
 
     let mut is_on: bool = false;
     loop {
-        p.P0.out.write(|w| w.pin21().bit(is_on));
+        let _ = row1.set_state(PinState::from(is_on));
+        let _ = row2.set_state(PinState::from(!is_on));
         for _ in 0..200_000 {
             nop();
         }
