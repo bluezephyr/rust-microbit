@@ -15,6 +15,8 @@ fn main() -> ! {
     let p = pac::Peripherals::take().unwrap();
     let port0 = hal::gpio::p0::Parts::new(p.P0);
     let mut col1 = port0.p0_28.into_push_pull_output(Level::Low);
+    let col1_input = col1.into_pullup_input();
+    col1 = col1_input.into_push_pull_output(Level::Low);
     let mut col2 = port0.p0_11.into_push_pull_output(Level::Low);
     let mut row1 = port0.p0_21.into_push_pull_output(Level::Low);
     let mut row2 = port0.p0_22.into_push_pull_output(Level::Low);
