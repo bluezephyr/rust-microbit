@@ -18,7 +18,7 @@ fn main() -> ! {
     let mut led_on = true;
     loop {
         let _ = row1.set_state(PinState::from(led_on));
-        for _ in 0..300_000 {
+        for _ in 0..200_000 {
             nop();
         }
         led_on = !led_on;

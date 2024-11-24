@@ -33,7 +33,7 @@ fn main() -> ! {
         unsafe {
             write_volatile(PORT0_OUT_ADDR, (led_on as u32) << PORT0_OUT_ROW1_POS);
         }
-        for _ in 0..100_000 {
+        for _ in 0..200_000 {
             nop();
         }
         led_on = !led_on;

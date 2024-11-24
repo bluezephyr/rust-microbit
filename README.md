@@ -181,3 +181,4 @@ Build and flash using `cargo embed`.
 * [Rust embedded](https://docs.rust-embedded.org/book/)
 * [Microbit](https://docs.rust-embedded.org/discovery/microbit/)
 * [Rust Embedded book](https://docs.rust-embedded.org/book/intro/install/linux.html#packages)
+* [Comprehensive Rust](https://google.github.io/comprehensive-rust/index.html)
