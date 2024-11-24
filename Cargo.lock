@@ -183,7 +183,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "microbit-hal"
+version = "0.1.0"
+dependencies = [
+ "cortex-m",
+ "cortex-m-rt",
+ "embedded-hal 1.0.0",
+ "nrf52833-hal",
+ "nrf52833-pac",
+ "panic-halt",
+]
+
+[[package]]
 name = "microbit-pac"
+version = "0.1.0"
+dependencies = [
+ "cortex-m",
+ "cortex-m-rt",
+ "embedded-hal 1.0.0",
+ "nrf52833-hal",
+ "nrf52833-pac",
+ "panic-halt",
+]
+
+[[package]]
+name = "microbit-square"
 version = "0.1.0"
 dependencies = [
  "cortex-m",
